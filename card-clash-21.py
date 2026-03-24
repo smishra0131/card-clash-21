@@ -13,20 +13,16 @@ def create_deck():
     for i in suits:
         for a in ranks:
             list.append(i,a)
-
-
-    
+    return list
 
 def shuffle_deck(deck):
     """Shuffles the deck list in-place."""
-    # TODO: Use the random module to shuffle the list
-    pass
+    random.shuffle(deck)
+    
 
 def deal_card(deck):
     """Removes and returns the top card from the deck."""
-    # TODO: Return a card and handle the edge case of an empty deck
-    pass
-
+    return deck.pop()
 def calculate_score(hand):
     """
     Calculates the total value of cards in a hand.
@@ -34,17 +30,45 @@ def calculate_score(hand):
     reduce the score by 10 until the score is <= 21 or no Aces remain.
     """
     # TODO: Implement scoring logic and Ace adjustment
-    pass
+    total = total + hand
+    ace = 11
+    if total > 21 and hand == ace:
+        total = total - 10
+    
+    
 
 def show_hand(player_name, hand, hide_first_card=False):
     """Prints the formatted hand and current score for the user."""
     # TODO: Print cards. If hide_first_card is True, obscure the first card.
-    pass
+    print(player_name + hand)
+    print("Your score is: " + total_score)
 
 def play_game():
     """Main game loop managing turns, user input, and winner logic."""
     # TODO: Implement game flow
-    pass
+    deck = create_deck()
+    shuffle_deck(deck)
+    deal_one = deal_card(deck)
+    deal_two = deal_card(deck)
+    total = calculate_score(hand)
+    show_hand(player_name, hand, hide_first_card=False)
+    
+   
+   
+   
+    while true:
+        user_choice = input("Do you want to hit or stand")
+        if user_choice == "hit" or "Hit":
+            return
+        elif user_choice == "stand" or "Stand":
+            return
+        else:
+            print("invalid input")
+    if total == 21:
+        print("winner")
+
+
 
 if __name__ == "__main__":
     play_game()
+    
