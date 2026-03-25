@@ -9,11 +9,11 @@ values = {
 
 def create_deck():
     """Returns a list of 52 tuples representing a standard deck: (rank, suit)"""
-    list = []
+    deck = []
     for i in suits:
         for a in ranks:
-            list.append(i,a)
-    return list
+            deck.append((a,i))
+    return deck
 
 def shuffle_deck(deck):
     """Shuffles the deck list in-place."""
@@ -30,45 +30,63 @@ def calculate_score(hand):
     reduce the score by 10 until the score is <= 21 or no Aces remain.
     """
     # TODO: Implement scoring logic and Ace adjustment
+    hand = 0
+    total = 0
     total = total + hand
     ace = 11
     if total > 21 and hand == ace:
         total = total - 10
     
-    
-
-def show_hand(player_name, hand, hide_first_card=False):
-    """Prints the formatted hand and current score for the user."""
-    # TODO: Print cards. If hide_first_card is True, obscure the first card.
-    print(player_name + hand)
-    print("Your score is: " + total_score)
 
 def play_game():
     """Main game loop managing turns, user input, and winner logic."""
     # TODO: Implement game flow
     deck = create_deck()
     shuffle_deck(deck)
-    deal_one = deal_card(deck)
-    deal_two = deal_card(deck)
+    player_hand = deal_card(deck)
+    dealer_hand = deal_card(deck)
+    hand = 0
     total = calculate_score(hand)
-    show_hand(player_name, hand, hide_first_card=False)
+    
     
    
-   
-   
-    while true:
-        user_choice = input("Do you want to hit or stand")
-        if user_choice == "hit" or "Hit":
-            return
-        elif user_choice == "stand" or "Stand":
-            return
+    while True:
+        player_score = 0
+        player_hand = 0
+        dealer_hand = 0
+        dealer_score = 0
+        player_score = player_score + player_hand
+        dealer_score = dealer_hand + dealer_score
+        print("You have " + str(player_hand))
+        print("Dealer has " + str(dealer_hand))
+        choice = input("Do you want to hit or stand? ")
+        if choice == "hit":
+            print(player_hand.append(deal_card(deck)))
+        elif choice == "stand":
+            print("Your score is " + str(player_score))
+            print("Dealer's turn.")
         else:
-            print("invalid input")
-    if total == 21:
-        print("winner")
-
-
-
+            print("Invalid input.")
+        while dealer_score > 17:
+            dealer_hand.append(deal_card(deck))
+        if player_score > 21:
+            print("You busted! Dealer wins.")
+        elif dealer_score > 21:
+            print("Dealer busted! You win.")
+        elif player_score == 21:
+            print("You have 21, you won.")
+        elif dealer_score == 21:
+            print("Dealer has 21, dealer won.")
+        elif player_score > dealer_score:
+            print("You has a higher score. You won.")
+        elif player_score < dealer_score:
+            print("Dealer has a higher score. Dealer won.")
+        else:
+            print("It's a tie.")
+    
+    
+   
+    
+    
 if __name__ == "__main__":
     play_game()
-    
