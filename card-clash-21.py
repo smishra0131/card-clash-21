@@ -8,67 +8,76 @@ values = {
 }
 
 def create_deck():
-    """Returns a list of 52 tuples representing a standard deck: (rank, suit)"""
+    # This will create the deck
     deck = []
-    for i in suits:
-        for a in ranks:
-            deck.append((a,i))
+    for suit in suits:
+        for rank in ranks:
+            deck.append((rank,suit))
     return deck
 
 def shuffle_deck(deck):
-    """Shuffles the deck list in-place."""
+    # This function will shuffle the deck
     random.shuffle(deck)
     
 
 def deal_card(deck):
-    """Removes and returns the top card from the deck."""
+    # This function will give the cards
     return deck.pop()
 def calculate_score(hand):
-    """
-    Calculates the total value of cards in a hand.
-    Requirement: If the score is over 21 and the hand contains an Ace, 
-    reduce the score by 10 until the score is <= 21 or no Aces remain.
-    """
-    # TODO: Implement scoring logic and Ace adjustment
-    hand = 0
+    # This will calculate the value of the aces and the total
+    aces = 0
     total = 0
-    total = total + hand
-    ace = 11
-    if total > 21 and hand == ace:
-        total = total - 10
+    for card in hand:
+        rank = card[0]
+        total = total + values[rank]
+        if rank == "Ace":
+            aces += 1
     
+    while total > 21 and aces:
+        total -= 10
+        aces -= 1
+    return total
+
+def show_hand(player_name, hand, hide_first_card=False):
+    #It hides the first card
+    if hide_first_card:
+        print("Hidden card")
+        for card in hand [1:]:
+            print(str(card[0]) + " of " + str(card[1]))
+    else:
+        for card in hand:
+            print(str(card[0]) + " of " + str(card[1]))
+        current_score = calculate_score(hand)
+        print("Score: " + str(current_score))
 
 def play_game():
-    """Main game loop managing turns, user input, and winner logic."""
-    # TODO: Implement game flow
-    deck = create_deck()
-    shuffle_deck(deck)
-    player_hand = deal_card(deck)
-    dealer_hand = deal_card(deck)
-    hand = 0
-    total = calculate_score(hand)
+# This is how the game will work
+    game_deck = create_deck()
+    shuffle_deck(game_deck)
+    player_hand = [deal_card(game_deck), deal_card(game_deck)]
+    dealer_hand = [deal_card(game_deck), deal_card(game_deck)]
     
+    answer = True
     
-   
-    while True:
-        player_score = 0
-        player_hand = 0
-        dealer_hand = 0
-        dealer_score = 0
-        player_score = player_score + player_hand
-        dealer_score = dealer_hand + dealer_score
-        print("You have " + str(player_hand))
-        print("Dealer has " + str(dealer_hand))
+
+    while answer:
+        print("Player", player_hand)
+        print("Dealer", dealer_hand,)
+        current_score = calculate_score(player_hand)
+        print("Player score: " + str(current_score))
         choice = input("Do you want to hit or stand? ")
         if choice == "hit":
-            print(player_hand.append(deal_card(deck)))
-        elif choice == "stand":
-            print("Your score is " + str(player_score))
-            print("Dealer's turn.")
+           player_hand.append(deal_card(game_deck))
+        elif choice == "stand" or current_score > 21:
+             print("Dealer is playing.")
+             while calculate_score(dealer_hand) < 17:
+                dealer_hand.append(deal_card(game_deck))
         else:
-            print("Invalid input.")
-        while dealer_score > 17:
-            dealer_hand.append(deal_card(deck))
+            print("Please type hit or stand.")
+        player_score = calculate_score(player_hand)
+        print("Player", player_hand)
+        print("Dealer", dealer_hand)
+        dealer_score = calculate_score(dealer_hand)
         if player_score > 21:
             print("You busted! Dealer wins.")
         elif dealer_score > 21:
@@ -83,10 +92,20 @@ def play_game():
             print("Dealer has a higher score. Dealer won.")
         else:
             print("It's a tie.")
-    
+        answer = False
+       
+       
+       
+       
+       
+
     
    
     
     
 if __name__ == "__main__":
     play_game()
+    
+   
+    
+    
